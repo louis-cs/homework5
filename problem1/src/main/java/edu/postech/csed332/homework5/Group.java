@@ -5,8 +5,7 @@ import edu.postech.csed332.homework5.events.SetNumberEvent;
 import edu.postech.csed332.homework5.events.UnsetNumberEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,11 +15,13 @@ import java.util.stream.Collectors;
 public class Group implements Observer {
     //TODO: add private member variables for Board
 
+    private List<Cell> cells;
     /**
      * Creates an empty group.
      */
     Group() {
         //TODO: implement this
+        cells = new ArrayList<>();
     }
 
     /**
@@ -30,6 +31,10 @@ public class Group implements Observer {
      */
     void addCell(Cell cell) {
         //TODO: implement this
+        if(!this.contains(cell)) {
+            cells.add(cell);
+            cell.addGroup(this);
+        }
     }
 
     /**
@@ -41,7 +46,10 @@ public class Group implements Observer {
     @NotNull
     Boolean contains(@NotNull Cell cell) {
         //TODO: implement this
-        return null;
+        if(!cells.contains(cell)){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -53,7 +61,14 @@ public class Group implements Observer {
     @NotNull
     public Boolean isAvailable(int number) {
         //TODO: implement this
-        return null;
+        for(Cell c : cells) {
+            if(c.getNumber().isPresent()){
+                int num = c.getNumber().get();
+                if(num == number)
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -66,5 +81,15 @@ public class Group implements Observer {
     @Override
     public void update(Subject caller, Event arg) {
         //TODO: implement this
+        if (arg instanceof SetNumberEvent) {
+            for(Cell c: cells) {
+                c.removePossibility(((SetNumberEvent) arg).getNumber());
+            }
+        }
+        if (arg instanceof UnsetNumberEvent) {
+            for(Cell c: cells) {
+                c.addPossibility(((UnsetNumberEvent) arg).getNumber());
+            }
+        }
     }
 }

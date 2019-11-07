@@ -65,6 +65,9 @@ public class Cell extends Subject {
      */
     public void setNumber(int number) {
         //TODO: implement this
+        if(!possibility.contains(number) || this.number >0){
+            return;
+        }
         this.number = number;
         SetNumberEvent sne = new SetNumberEvent(number);
         notifyObservers(sne);
