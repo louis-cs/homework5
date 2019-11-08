@@ -91,6 +91,7 @@ class ProjectStructureTree extends Tree {
      */
     private void updateTree(@NotNull Project project, @NotNull PsiElement target) {
         // TODO: implement this method
+
     }
 
     /**

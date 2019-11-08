@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conversion>
+  <applied-converters>
+    <converter id="android-module-to-java-module" />
+    <converter id="android-proguard-options" />
+    <converter id="android-sdk-library" />
+    <converter id="junit-to-android-junit-configurations" />
+    <converter id="kotlin-non-jvm-source-roots" />
+  </applied-converters>
+  <project-files>
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/gradle.xml" timestamp="1573220828932" />
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/misc.xml" timestamp="1573108685421" />
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/modules.xml" timestamp="1573220828930" />
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/problem1.iml" timestamp="1573220828920" />
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/vcs.xml" timestamp="1573108685427" />
+    <file path="/Users/yuxuan/Documents/NTU/Postech Exchange/Studies/Software Design Methods/Homework5/homework5/problem1/.idea/workspace.xml" timestamp="1573220856107" />
+  </project-files>
+</conversion>
+

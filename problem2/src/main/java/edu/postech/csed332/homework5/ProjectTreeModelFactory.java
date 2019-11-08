@@ -8,10 +8,7 @@ import com.intellij.psi.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 class ProjectTreeModelFactory {
 
@@ -31,25 +28,62 @@ class ProjectTreeModelFactory {
         // The visitor to traverse the Java hierarchy and to construct the tree
         final JavaElementVisitor visitor = new JavaElementVisitor() {
             // TODO: add member variables if necessary
+            final DefaultMutableTreeNode root = new DefaultMutableTreeNode(project);
+            final DefaultMutableTreeNode pNode = new DefaultMutableTreeNode(root);
+            final DefaultMutableTreeNode cNode = new DefaultMutableTreeNode(pNode);
 
             @Override
             public void visitPackage(PsiPackage pack) {
                 // TODO: add a new node to the parent node, and traverse the content of the package
+                root.add(new DefaultMutableTreeNode(pack));
+                List<PsiPackage> packs =  Arrays.asList(pack.getSubPackages());
+
+                if(packs == null){
+                    List<PsiClass> classList = Arrays.asList(pack.getClasses());
+
+                    if(classList != null){
+                        for(int i = 0;i<classList.size();i++){
+                            visitClass(classList.get(i));
+                        }
+                    }
+                }
+                else {
+                    for(int i =0;i<packs.size();i++){
+                        visitPackage(packs.get(i));
+                    }
+                }
             }
 
             @Override
             public void visitClass(PsiClass aClass) {
                 // TODO: add a new node the parent node, and traverse the content of the class
+                pNode.add(new DefaultMutableTreeNode(aClass));
+                List<PsiMethod> methodList = Arrays.asList(aClass.getMethods());
+                List<PsiField> fieldList = Arrays.asList(aClass.getFields());
+
+                if(methodList != null){
+                    for(int i =0;i<methodList.size();i++){
+                        visitMethod(methodList.get(i));
+                    }
+                }
+
+                if(fieldList != null){
+                    for(int i =0;i<fieldList.size();i++){
+                        visitField(fieldList.get(i));
+                    }
+                }
             }
 
             @Override
             public void visitMethod(PsiMethod method) {
                 // TODO: add a new node to the parent node
+                cNode.add(new DefaultMutableTreeNode(method));
             }
 
             @Override
             public void visitField(PsiField field) {
                 // TODO: add a new node to the parent node
+                cNode.add(new DefaultMutableTreeNode(field));
             }
         };
 

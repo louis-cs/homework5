@@ -1,0 +1,15 @@
+<idea-plugin>
+  <version>1.0-SNAPSHOT</version>
+  <idea-version since-build="192.6262" until-build="192.*"/>
+  <id>edu.postech.csed332.homework5</id>
+  <name>Project Structure Tool Window</name>
+  <vendor email="youremail@postech.ac.kr" url="http://csed332.postech.ac.kr">POSTECH CSED332</vendor>
+  <description>
+    Homework 5&lt;br&gt;
+    &lt;em&gt;Problem 2&lt;/em&gt; is building a tool window that shows Java project structure.
+    </description>
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="Project Structure" anchor="right" factoryClass="edu.postech.csed332.homework5.MyToolWindowFactory"/>
+  </extensions>
+  <actions/>
+</idea-plugin>
