@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * A cell that has a number and a set of possibilities. Even cells can contain only even numbers, and odd cells can
@@ -32,6 +33,13 @@ public class Cell extends Subject {
         this.type = type;
         possibility = new ArrayList<>();
         groups = new ArrayList<>();
+
+        for (int i=1; i<10; i++){
+            if(this.type == Type.EVEN && i%2 == 0)
+                possibility.add(i);
+            else if (this.type == Type.ODD && i%2 == 1)
+                possibility.add(i);
+        }
     }
 
     public void setPosition(int line, int column){
@@ -76,12 +84,12 @@ public class Cell extends Subject {
      */
     public void setNumber(int number) {
         //TODO: implement this
+
         if(!possibility.contains(number) || this.number >0){
             return;
         }
         this.number = number;
-        SetNumberEvent sne = new SetNumberEvent(number);
-        notifyObservers(sne);
+        notifyObservers(new SetNumberEvent(number));
     }
 
     /**
@@ -89,9 +97,9 @@ public class Cell extends Subject {
      */
     public void unsetNumber() {
         //TODO: implement this
+        int temp = this.number;
         this.number = 0;
-        UnsetNumberEvent une = new UnsetNumberEvent(number);
-        notifyObservers(une);
+        notifyObservers(new UnsetNumberEvent(temp));
     }
 
     /**
@@ -157,9 +165,10 @@ public class Cell extends Subject {
         }
 
         for (Group g : groups){
-            if(!g.isAvailable(number))
+            if(!g.isAvailable(number)) {
                 System.out.print("Number not available. ");
                 return;
+            }
         }
 
         if(possibility.size() == 0)
@@ -176,9 +185,11 @@ public class Cell extends Subject {
      */
     public void removePossibility(int number) {
         //TODO: implement this
+        boolean found =false;
+        int i = 0;
         if(number %2 == 0) {
             if (type == Type.ODD){
-                System.out.print("Even number in Odd cell. ");
+                System.out.print("Even number in Odd cell.");
                 return;
             }
         }
@@ -189,9 +200,15 @@ public class Cell extends Subject {
             }
         }
 
-        possibility.remove(number);
+        while (!found && i < possibility.size()) {
+            if(number == possibility.get(i)){
+                possibility.remove(i);
+                found = true;
+            }
+            i++;
+        }
 
-        if(possibility.size() == 0)
+        if(possibility.size() == 0 && !this.getNumber().isPresent())
             notifyObservers(new DisabledEvent());
     }
 }

@@ -29,7 +29,7 @@ public class Group implements Observer {
 
     public void setTypeNb(GroupType type, int nb){
         this.type=type;
-        this.groupNb=groupNb;
+        this.groupNb=nb;
     }
 
     public GroupType getType(){

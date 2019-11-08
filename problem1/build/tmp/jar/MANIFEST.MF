@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: annotations-17.0.0.jar
+Main-Class: edu.postech.csed332.homework5.GameUI
+

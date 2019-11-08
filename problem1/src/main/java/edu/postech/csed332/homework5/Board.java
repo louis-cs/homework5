@@ -2,6 +2,7 @@ package edu.postech.csed332.homework5;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class Board {
      */
     Board(@NotNull GameInstance game) {
         //TODO: implement this
+        groups = new ArrayList<>();
+        cells = new ArrayList<>();
         this.game = game;
         for(int i=0;i<9;i++) {
             Group temp = new Group();
@@ -33,10 +36,23 @@ public class Board {
         }
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
+                //System.out.print("i :" + i + " j: " + j);
                 Cell cell = new Cell(game.isEven(i, j) ? Cell.Type.EVEN : Cell.Type.ODD);
+                cell.setPosition(i,j);
                 this.getRowGroup(i).addCell(cell);
                 this.getColGroup(j).addCell(cell);
-                this.getSquareGroup(i,j).addCell(cell);
+                this.getSquareGroup(i/3,j/3).addCell(cell);
+                cells.add(cell);
+            }
+        }
+         int t = 0;
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if (cells.get(t).getPosition()[0] == i && cells.get(t).getPosition()[1] == j) {
+                    if(game.getNumbers(i,j).isPresent())
+                        cells.get(t).setNumber(game.getNumbers(i,j).get());
+                    t++;
+                }
             }
         }
 
@@ -99,6 +115,7 @@ public class Board {
         }
         for (Group g : groups){
             if(g.getGroupNb()==j){
+                System.out.print(" " + g.getGroupNb() + g.getType());
                 if(g.getType()==Group.GroupType.COLUMN){
                     return g;
                 }
@@ -120,7 +137,8 @@ public class Board {
         if(n > 3 || m >3) {
             System.out.print("Invalid argument. ");
         }
-        int grpNum = n%3 + (m/3)*3;
+        int grpNum = (n)*3 + (m);
+        System.out.print("Sqaure number: " + grpNum);
         for (Group g : groups){
             if(g.getGroupNb()==grpNum){
                 if(g.getType()==Group.GroupType.SQUARE){
