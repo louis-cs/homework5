@@ -14,7 +14,10 @@ import java.util.stream.Collectors;
  */
 public class Group implements Observer {
     //TODO: add private member variables for Board
+    static enum GroupType {LINE,COLUMN,SQUARE};
 
+    private int groupNb;
+    private GroupType type;
     private List<Cell> cells;
     /**
      * Creates an empty group.
@@ -24,6 +27,18 @@ public class Group implements Observer {
         cells = new ArrayList<>();
     }
 
+    public void setTypeNb(GroupType type, int nb){
+        this.type=type;
+        this.groupNb=groupNb;
+    }
+
+    public GroupType getType(){
+        return this.type;
+    }
+
+    public int getGroupNb(){
+        return this.groupNb;
+    }
     /**
      * Adds a cell to this group. Use cell.addGroup to register this group.
      *

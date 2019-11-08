@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.text.html.Option;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -19,6 +20,7 @@ public class Cell extends Subject {
     private List<Integer> possibility;
     private Type type;
     private List<Group> groups;
+    private int[] position = new int[2];
 
     /**
      * Creates an empty cell with a given type. Initially, no number is assigned.
@@ -30,6 +32,15 @@ public class Cell extends Subject {
         this.type = type;
         possibility = new ArrayList<>();
         groups = new ArrayList<>();
+    }
+
+    public void setPosition(int line, int column){
+        position[0] = line;
+        position[1] = column;
+    }
+
+    public int[] getPosition(){
+        return position;
     }
 
     /**
